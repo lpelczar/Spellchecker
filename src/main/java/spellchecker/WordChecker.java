@@ -66,13 +66,21 @@ public class WordChecker {
 
     private void checkSwappingEachAdjacentPair(String word, List<String> suggestions) {
         for (int i = 0; i < word.length() - 1; i++) {
-            String suggestion = word.replace(Character.toString(word.charAt(i)), "*")
-                                 .replace(Character.toString(word.charAt(i)), Character.toString(word.charAt(i + 1)))
-                                 .replace("*", Character.toString(word.charAt(i + 1)));
+            String suggestion = swap(word, i, i + 1);
             if (wordExists(suggestion) && !suggestions.contains(suggestion)) {
                 suggestions.add(suggestion);
             }
         }
+    }
+
+    private String swap(String str, int i, int j) {
+        if (j == str.length() - 1)
+            return str.substring(0, i) + str.charAt(j)
+                    + str.substring(i + 1, j) + str.charAt(i);
+
+        return str.substring(0, i) + str.charAt(j)
+                + str.substring(i + 1, j) + str.charAt(i)
+                + str.substring(j + 1, str.length());
     }
 
     private void checkInsertingLetterInEachPositionOfTheString(String word, List<String> suggestions) {
