@@ -4,9 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.List;
 
 public class Checker {
 
@@ -22,7 +21,7 @@ public class Checker {
         label34:
         for(WordChecker var9 = new WordChecker(var5); var7 != null; var8 = new WordLineReader(var7)) {
             while(true) {
-                ArrayList var11;
+                List<String> var11;
                 do {
                     String var10;
                     do {
@@ -42,10 +41,8 @@ public class Checker {
 
                 Collections.sort(var11);
                 var4.println("  perhaps you meant: ");
-                Iterator var12 = var11.iterator();
 
-                while(var12.hasNext()) {
-                    String var13 = (String)var12.next();
+                for (Object var13 : var11) {
                     var4.println("          " + var13 + " ");
                 }
             }

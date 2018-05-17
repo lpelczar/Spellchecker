@@ -1,6 +1,7 @@
 package spellchecker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -54,9 +55,25 @@ public class WordChecker {
      * @param word String to check against
      * @return A list of plausible matches
      */
-	public ArrayList getSuggestions(String word) {
+	public List<String> getSuggestions(String word) {
 
-		return new ArrayList();
+        List<String> suggestions = new ArrayList<>();
+
+        checkSwappingEachAdjacentPair(word, suggestions);
+        checkInsertingLetterInEachPositionOfTheString(word, suggestions);
+
+
+        return suggestions;
 	}
 
+    private void checkSwappingEachAdjacentPair(String word, List<String> suggestions) {
+        for (int i = 0; i < word.length() - 1; i++) {
+            String swapped = word.replace(Character.toString(word.charAt(i)), "*")
+                                 .replace(Character.toString(word.charAt(i)), Character.toString(word.charAt(i + 1)))
+                                 .replace("*", Character.toString(word.charAt(i + 1)));
+            if (wordExists(swapped)) {
+                suggestions.add(swapped);
+            }
+        }
+    }
 }

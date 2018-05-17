@@ -15,7 +15,7 @@ import java.util.LinkedList;
 
 public class HashTable<K, V> {
 
-    private int bucketSize = 16;
+    private int bucketSize;
     private int size = 0;
     private StringHasher hasher;
 
