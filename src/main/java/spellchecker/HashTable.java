@@ -60,11 +60,11 @@ public class HashTable<K, V> {
 	
 
 	/**
-  * Takes a string and returns true if that string appears in the
+    * Takes a string and returns true if that string appears in the
 	* hash table, false otherwise.
-  *
-  * @param s String to look up
-  */
+    *
+    * @param s String to look up
+    */
 	public boolean lookup(String s) {
         int position = getHashPosition(s);
         LinkedList<String> list = elements[position];
@@ -72,7 +72,7 @@ public class HashTable<K, V> {
         for (String string : list) {
             if (string.equals(s)) return true;
         }
-        
+
         return false;
 	}
 	
@@ -82,10 +82,20 @@ public class HashTable<K, V> {
    * appears in the hash table.  If it doesn't, this method has no effect.
    *
    * @param s String to remove
-  */
-	public void remove(String s)
-	{
+    */
+	public void remove(String s) {
 
+        int position = getHashPosition(s);
+        LinkedList<String> list = elements[position];
+
+        for (String string : list) {
+            if (string.equals(s)) {
+                list.remove(string);
+                size--;
+                break;
+            }
+        }
+        resizeIfNeeded();
 	}
 
     private void resizeIfNeeded() {
