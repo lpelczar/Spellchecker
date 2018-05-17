@@ -130,6 +130,6 @@ public class HashTable<K, V> {
     }
 
     private int getHashPosition(String s) {
-        return Math.abs(s.hashCode()) % bucketSize;
+        return Math.abs(hasher.hash(s)) % bucketSize;
     }
 }
