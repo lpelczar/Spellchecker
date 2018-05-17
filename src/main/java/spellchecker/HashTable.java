@@ -18,9 +18,7 @@ public class HashTable<K, V> {
     private int bucketSize;
     private int size = 0;
     private StringHasher hasher;
-
-    @SuppressWarnings("unchecked")
-    private LinkedList<String>[] elements = new LinkedList[bucketSize];
+    private LinkedList<String>[] elements;
 
 	/**
    * The constructor is given a table size (i.e. how big to make the array)
@@ -30,10 +28,12 @@ public class HashTable<K, V> {
    *        hasher    Object that creates the hash code for a string
    * @see StringHasher
    */
+    @SuppressWarnings("unchecked")
 	public HashTable(int tableSize, StringHasher hasher) {
 
 	    this.hasher = hasher;
 	    this.bucketSize = tableSize;
+	    this.elements = new LinkedList[bucketSize];
         initializeLinkedListsInArray();
 	}
 
@@ -130,6 +130,6 @@ public class HashTable<K, V> {
     }
 
     private int getHashPosition(String s) {
-        return hasher.hash(s);
+        return Math.abs(s.hashCode()) % bucketSize;
     }
 }

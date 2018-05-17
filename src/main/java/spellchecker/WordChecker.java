@@ -56,24 +56,21 @@ public class WordChecker {
      * @return A list of plausible matches
      */
 	public List<String> getSuggestions(String word) {
-
         List<String> suggestions = new ArrayList<>();
-
         checkSwappingEachAdjacentPair(word, suggestions);
         checkInsertingLetterInEachPositionOfTheString(word, suggestions);
         checkDeletingEachCharacterFromTheWord(word, suggestions);
         checkReplacingEachLetterWithAnother(word, suggestions);
-
         return suggestions;
 	}
 
     private void checkSwappingEachAdjacentPair(String word, List<String> suggestions) {
         for (int i = 0; i < word.length() - 1; i++) {
-            String swapped = word.replace(Character.toString(word.charAt(i)), "*")
+            String suggestion = word.replace(Character.toString(word.charAt(i)), "*")
                                  .replace(Character.toString(word.charAt(i)), Character.toString(word.charAt(i + 1)))
                                  .replace("*", Character.toString(word.charAt(i + 1)));
-            if (wordExists(swapped)) {
-                suggestions.add(swapped);
+            if (wordExists(suggestion) && !suggestions.contains(suggestion)) {
+                suggestions.add(suggestion);
             }
         }
     }
@@ -84,7 +81,7 @@ public class WordChecker {
                 StringBuilder stringBuilder = new StringBuilder(word);
                 stringBuilder.insert(position, letter);
                 String suggestion = stringBuilder.toString();
-                if (wordExists(suggestion)) {
+                if (wordExists(suggestion) && !suggestions.contains(suggestion)) {
                     suggestions.add(suggestion);
                 }
             }
@@ -96,7 +93,7 @@ public class WordChecker {
             StringBuilder stringBuilder = new StringBuilder(word);
             stringBuilder.deleteCharAt(position);
             String suggestion = stringBuilder.toString();
-            if (wordExists(suggestion)) {
+            if (wordExists(suggestion) && !suggestions.contains(suggestion)) {
                 suggestions.add(suggestion);
             }
         }
@@ -106,9 +103,9 @@ public class WordChecker {
         for (int position = 0; position < word.length(); position++) {
             for (char letter = 'A'; letter <= 'Z'; letter++) {
                 StringBuilder stringBuilder = new StringBuilder(word);
-                stringBuilder.replace(position, position, Character.toString(letter));
+                stringBuilder.setCharAt(position, letter);
                 String suggestion = stringBuilder.toString();
-                if (wordExists(suggestion)) {
+                if (wordExists(suggestion) && !suggestions.contains(suggestion)) {
                     suggestions.add(suggestion);
                 }
             }
