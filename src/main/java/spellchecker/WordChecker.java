@@ -61,7 +61,7 @@ public class WordChecker {
 
         checkSwappingEachAdjacentPair(word, suggestions);
         checkInsertingLetterInEachPositionOfTheString(word, suggestions);
-
+        checkDeletingEachCharacterFromTheWord(word, suggestions);
 
         return suggestions;
 	}
@@ -86,6 +86,17 @@ public class WordChecker {
                 if (wordExists(suggestion)) {
                     suggestions.add(suggestion);
                 }
+            }
+        }
+    }
+
+    private void checkDeletingEachCharacterFromTheWord(String word, List<String> suggestions) {
+        for (int position = 0; position < word.length(); position++) {
+            StringBuilder stringBuilder = new StringBuilder(word);
+            stringBuilder.deleteCharAt(position);
+            String suggestion = stringBuilder.toString();
+            if (wordExists(suggestion)) {
+                suggestions.add(suggestion);
             }
         }
     }
