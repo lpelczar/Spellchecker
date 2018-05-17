@@ -34,10 +34,7 @@ public class HashTable<K, V> {
 
 	    this.hasher = hasher;
 	    this.bucketSize = tableSize;
-
-        for (int i = 0; i < elements.length; i++) {
-            elements[i] = new LinkedList<>();
-        }
+        initializeLinkedListsInArray();
 	}
 
 
@@ -85,6 +82,37 @@ public class HashTable<K, V> {
 	{
 
 	}
+
+    private void resizeIfNeeded() {
+        if (size > bucketSize * 2) {
+            bucketSize *= 2;
+            createNewArrayAndCopyElements();
+        }
+        if (size < bucketSize / 2) {
+            bucketSize /= 2;
+            createNewArrayAndCopyElements();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void createNewArrayAndCopyElements() {
+        LinkedList<String>[] elementsCopy = elements.clone();
+        elements = new LinkedList[bucketSize];
+        initializeLinkedListsInArray();
+
+        for (LinkedList<String> list : elementsCopy) {
+            for (String string : list) {
+                int position = getHashPosition(string);
+                elements[position].add(string);
+            }
+        }
+    }
+
+    private void initializeLinkedListsInArray() {
+        for (int i = 0; i < elements.length; i++) {
+            elements[i] = new LinkedList<>();
+        }
+    }
 
     private int getHashPosition(String s) {
         return s.hashCode() % bucketSize;
