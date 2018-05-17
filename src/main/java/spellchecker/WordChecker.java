@@ -76,4 +76,17 @@ public class WordChecker {
             }
         }
     }
+
+    private void checkInsertingLetterInEachPositionOfTheString(String word, List<String> suggestions) {
+        for (int position = 0; position < word.length(); position++) {
+            for (char letter = 'A'; letter <= 'Z'; letter++) {
+                StringBuilder stringBuilder = new StringBuilder(word);
+                stringBuilder.insert(position, letter);
+                String suggestion = stringBuilder.toString();
+                if (wordExists(suggestion)) {
+                    suggestions.add(suggestion);
+                }
+            }
+        }
+    }
 }
