@@ -20,7 +20,7 @@ public class HashTable<K, V> {
     private StringHasher hasher;
 
     @SuppressWarnings("unchecked")
-    private LinkedList<Entry<K, V>>[] elements = new LinkedList[bucketSize];
+    private LinkedList<String>[] elements = new LinkedList[bucketSize];
 
 	/**
    * The constructor is given a table size (i.e. how big to make the array)
@@ -48,7 +48,17 @@ public class HashTable<K, V> {
    * @param s String to add
    */
 	public void add(String s) {
-	    
+
+        int position = getHashPosition(s);
+        LinkedList<String> list = elements[position];
+
+        for (String string : list) {
+            if (s.equals(string)) return;
+        }
+
+        list.add(s);
+        size++;
+        resizeIfNeeded();
 	}
 	
 
@@ -75,4 +85,8 @@ public class HashTable<K, V> {
 	{
 
 	}
+
+    private int getHashPosition(String s) {
+        return s.hashCode() % bucketSize;
+    }
 }
