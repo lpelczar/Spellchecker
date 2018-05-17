@@ -42,9 +42,8 @@ public class WordChecker {
      * @return bollean indicating if the word was found or not.
      */
 	public boolean wordExists(String word) {
-
-		return false;
-	}
+        return wordList.lookup(word);
+    }
 
 
 	/**
