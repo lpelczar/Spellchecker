@@ -1,5 +1,7 @@
 package spellchecker;
 
+import java.util.LinkedList;
+
 /**
  *
  * ICS 23 Summer 2004
@@ -11,19 +13,31 @@ package spellchecker;
  * the strings that hashed to that cell.
  */
 
-public class HashTable
-{
+public class HashTable<K, V> {
+
+    private int bucketSize = 16;
+    private int size = 0;
+    private StringHasher hasher;
+
+    @SuppressWarnings("unchecked")
+    private LinkedList<Entry<K, V>>[] elements = new LinkedList[bucketSize];
+
 	/**
    * The constructor is given a table size (i.e. how big to make the array)
-   * and a spellchecker.StringHasher, which is used to hash the strings.
+   * and a StringHasher, which is used to hash the strings.
    *
    * @param tableSize number of elements in the hash array
    *        hasher    Object that creates the hash code for a string
    * @see StringHasher
    */
-	public HashTable(int tableSize, StringHasher hasher)
-	{
+	public HashTable(int tableSize, StringHasher hasher) {
 
+	    this.hasher = hasher;
+	    this.bucketSize = tableSize;
+
+        for (int i = 0; i < elements.length; i++) {
+            elements[i] = new LinkedList<>();
+        }
 	}
 
 
@@ -33,9 +47,8 @@ public class HashTable
    *
    * @param s String to add
    */
-	public void add(String s)
-	{
-
+	public void add(String s) {
+	    
 	}
 	
 
