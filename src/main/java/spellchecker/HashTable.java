@@ -65,10 +65,15 @@ public class HashTable<K, V> {
   *
   * @param s String to look up
   */
-	public boolean lookup(String s)
-	{
+	public boolean lookup(String s) {
+        int position = getHashPosition(s);
+        LinkedList<String> list = elements[position];
 
-		return false;
+        for (String string : list) {
+            if (string.equals(s)) return true;
+        }
+        
+        return false;
 	}
 	
 
